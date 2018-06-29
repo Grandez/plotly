@@ -1,0 +1,46 @@
+---
+title: "Sample of plotly graph"
+author: "Javier Gonzalez"
+date: "28 de junio de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro
+
+This is a simple example about plotting data with plot.ly
+
+More advanced features of plotly will be used on next assignment (Shiny Page)
+
+
+```{r , message=FALSE, evaluate=FALSE}
+library(plotly)
+btc = read.csv("BTC.csv", dec=",", sep=";")
+btc$Fecha = as.Date(btc$Fecha, format="%d/%m/%Y")
+df <- btc[order(btc$Fecha),] 
+
+# Linear
+p0 <- plot_ly(df, x = ~Fecha, y = ~End, type = 'scatter', mode = 'lines + markers')
+
+# Candles
+p2 <- plot_ly(df, x = ~Fecha, type = 'candlestick', open = ~Beg, close = ~End, high = ~High, low = ~Low)
+p2 <- layout(p2, xaxis = list(rangeslider = list(visible = F)))
+
+```
+
+# Linear plot
+Use zoom or range
+
+```{r, echo=F, message=FALSE}
+p0
+```
+
+
+# candle plot
+Use zoom or range
+```{r, echo=F, message=FALSE}
+p2
+```
